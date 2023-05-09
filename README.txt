@@ -1,0 +1,2 @@
+This set of scripts will proccess bulk RNAseq data from downloading raw FASTQs to generating read counts and a summary table. Each script contains variables at the top which need to be set, after which the script can be run. Each 'parent' script will generate one or more slurm scripts and submit them to the queue. The directory structure is generated as it goes along, as it a report listing all the software used and its version numbers.
+Sarah Christofides, 2023
