@@ -59,31 +59,36 @@ do
 	echo "#SBATCH --error=${SCRATCHPATH}/ERR/%J" >> ${scriptName}     # redirect stderr to this file
 	echo "#SBATCH --output=${SCRATCHPATH}/OUT/%J" >> ${scriptName}    # redirect stdout to this file
 
+	##Get the link in quotes
+	LINK=$(echo \"${DOWNLOADURL[$url]}\")
+	
 	##Download the data
 	echo -e "
 	echo Downloading ${DOWNLOADURL[$url]}
-	curl -sL ${DOWNLOADURL[$url]}/download > ${SCRATCHPATH}/01-download/download${url}.zip
+	curl -s -o ${SCRATCHPATH}/01-download/download${url} $[LINK]}
         echo Download ${DOWNLOADURL[$url]} complete
 
 	##Save the run name to a variable and rename the zip file
-	RUN=\$(unzip -Z -1 ${SCRATCHPATH}/01-download/download${url}.zip | head -n 1 | sed -E 's/(.+)\/$/\1/')
-	mv ${SCRATCHPATH}/01-download/download${url}.zip ${SCRATCHPATH}/01-download/\${RUN}.zip
+	RUN=\$(tar -tf ${SCRATCHPATH}/01-download/download${url} | head -n 1)
+	#RUN=\$(unzip -Z -1 ${SCRATCHPATH}/01-download/download${url}.zip | head -n 1 | sed -E 's/(.+)\/$/\1/')
+	mv ${SCRATCHPATH}/01-download/download${url} ${SCRATCHPATH}/01-download/\${RUN}.tar.gz
 
 	##Copy the data to long term storage
 #	echo Copying \${RUN} to long term storage
-	##cp ${SCRATCHPATH}/01-download/\${RUN}.zip ${SAVEPATH}/\${RUN}.zip
+	##cp ${SCRATCHPATH}/01-download/\${RUN}.zip ${SAVEPATH}/\${RUN}.tar.gz
 
         ##Unzip the data
 	echo Unzipping \${RUN}
-       unzip ${SCRATCHPATH}/01-download/\${RUN}.zip -d ${SCRATCHPATH}/01-download/
+        tar -xzf ${SCRATCHPATH}/01-download/\${RUN}.tar.gz -C ${SCRATCHPATH}/01-download/
 
 	##Remove the zipped file
-	rm ${SCRATCHPATH}/01-download/\${RUN}.zip
+	rm ${SCRATCHPATH}/01-download/\${RUN}.tar.gz
 	
 	##Add run name to the report
 	echo \${RUN} >> ${SCRATCHPATH}/AnalysisReport.txt
 	exit 0" >> ${scriptName}
 
+	
         ## make the script into an 'executable'
         chmod u+x ${scriptName}
 
