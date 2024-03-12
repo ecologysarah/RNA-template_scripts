@@ -90,9 +90,11 @@ do
         if [ "${ends}" = PE ]; then echo "-I \${FILEPATH}/\${sampleID}R2\${FILEND} \\" >> ${scriptName}; fi
         echo "-o ${myDir}/02-trim/trim_\${sampleID}_R1\${FILEND} \\" >> ${scriptName}
         if [ "${ends}" = PE ]; then echo "-O ${myDir}/02-trim/trim_\${sampleID}_R2\${FILEND} \\" >> ${scriptName}; fi
-	##Set the minimum phred score to 20
-	echo -e "-q 20
-	" >> ${scriptName}
+	##Set the minimum phred score to 20, with no more than 10% bases allowed to drop below that
+	echo "-q 20 \\
+	-u 10 \\" >> ${scriptName}
+	## Enable sliding window trim
+	echo "--cut_right" >> ${scriptName}
 
         ## make the script into an 'executable'
         chmod u+x ${scriptName}
