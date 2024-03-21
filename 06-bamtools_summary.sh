@@ -56,8 +56,8 @@ do
         echo "#SBATCH --tasks-per-node=${cpu}" >> ${scriptName}
         echo "#SBATCH -t ${runTime}" >> ${scriptName}
         echo "#SBATCH --array=1-${nSamps}" >> ${scriptName}
-        echo "#SBATCH --output ${myDir}/OUT/${scriptBase}${jobName}.%A-%a" >> ${scriptName}
-        echo "#SBATCH --error ${myDir}/ERR/${scriptBase}${jobName}.%A-%a" >> ${scriptName}
+        echo "#SBATCH --output ${myDir}/OUT/${scriptBase}.%A-%a" >> ${scriptName}
+        echo "#SBATCH --error ${myDir}/ERR/${scriptBase}.%A-%a" >> ${scriptName}
         echo "#SBATCH --account=${userProject}" >> ${scriptName}
 
         echo "module load ${BAMTOOLS}" >> ${scriptName}
@@ -81,7 +81,7 @@ do
 done
 
 #Create and run a slurm script that will do multiQC on the output
-scriptName=${myDir}/temp/${jobName}.sh
+scriptName=${myDir}/temp/${scriptBase}.sh
 touch ${scriptName}
 
 echo "#!/bin/bash" > ${scriptName}
@@ -89,8 +89,8 @@ echo "#SBATCH --partition=epyc" >> ${scriptName}
 echo "#SBATCH --mem-per-cpu=2" >> ${scriptName}
 echo "#SBATCH --nodes=1" >> ${scriptName}
 echo "#SBATCH --tasks-per-node=${cpu}" >> ${scriptName}
-echo "#SBATCH --output ${myDir}/OUT/${scriptBase}${jobName}.%J" >> ${scriptName}
-echo "#SBATCH --error ${myDir}/ERR/${scriptBase}${jobName}.%J" >> ${scriptName}
+echo "#SBATCH --output ${myDir}/OUT/${scriptBase}.%J" >> ${scriptName}
+echo "#SBATCH --error ${myDir}/ERR/${scriptBase}.%J" >> ${scriptName}
 
 echo "module load ${multiQC}" >> ${scriptName}
 
