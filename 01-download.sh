@@ -65,7 +65,7 @@ do
 	##Download the data
 	echo -e "
 	echo Downloading ${DOWNLOADURL[$url]}
-	curl -s -o ${SCRATCHPATH}/01-download/download${url} $[LINK]}
+	curl -s -o ${SCRATCHPATH}/01-download/download${url} ${LINK}
         echo Download ${DOWNLOADURL[$url]} complete
 
 	##Save the run name to a variable and rename the zip file
