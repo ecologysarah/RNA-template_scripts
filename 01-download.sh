@@ -10,10 +10,10 @@ analyst=""
 ##Your project title
 project=""
 ##N.B. If you are working on a server that doesn't use scratch, leave the SAVEPATH commented out and set SCRATCHPATH to your data folder.
-##Set path to directory for saving files
-##SAVEPATH=/mnt/data/GROUP-yourgroup/yourusername/yourproject
 ##Set path to working directory on scratch
 SCRATCHPATH=
+##Download files (download) or just set up structure and create inventory (organise)? If the latter, ensure that your raw files are in a directory called 01-download
+ACTION=
 ##Paste in the URLs to your files here, e.g. DOWNLOADURL=("https://url1" "https://url2")
 DOWNLOADURL=()
 #Set the slurm queue to use: defq for gomphus or iago, htc for hawk
@@ -36,6 +36,9 @@ slurmids=""
 touch ${SCRATCHPATH}/AnalysisReport.txt
 ##Add information to the report
 echo -e "${project}\nAnalysis run by ${analyst}\nSequencing runs:" >> ${SCRATCHPATH}/AnalysisReport.txt
+
+if [[ ${ACTION} == download ]]
+	then 
 
 ##Work through each of the links in turn
 for url in "${!DOWNLOADURL[@]}"
@@ -73,9 +76,6 @@ do
 	#RUN=\$(unzip -Z -1 ${SCRATCHPATH}/01-download/download${url}.zip | head -n 1 | sed -E 's/(.+)\/$/\1/')
 	mv ${SCRATCHPATH}/01-download/download${url} ${SCRATCHPATH}/01-download/\${RUN}.tar.gz
 
-	##Copy the data to long term storage
-#	echo Copying \${RUN} to long term storage
-	##cp ${SCRATCHPATH}/01-download/\${RUN}.zip ${SAVEPATH}/\${RUN}.tar.gz
 
         ##Unzip the data
 	echo Unzipping \${RUN}
@@ -96,6 +96,8 @@ do
         slurmids="${slurmids}:$(sbatch --parsable ${scriptName})"
 
 done
+
+fi 
 
 ##Create a list of sample names for subsequent steps
 scriptName=${SCRATCHPATH}/temp/${scriptBase}.sh
@@ -118,6 +120,10 @@ echo "find ${SCRATCHPATH}/01-download/ -name *f*q.gz | grep -v 'Undet' | sed -E 
 ##Make the script into an 'executable'
 chmod u+x ${scriptName}
 ##Submit the script to the compute queue
-sbatch -d afterok${slurmids} ${scriptName}
+if [[ ${ACTION} == download ]]
+        then
+	sbatch -d afterok${slurmids} ${scriptName}
+	else sbatch ${scriptName}
+fi
 
 exit 0
