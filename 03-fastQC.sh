@@ -6,8 +6,6 @@
 ###VARIABLES TO BE SET###
 #Set the path to your directory on scratch
 myDir=
-#Set your username
-userProject=
 #Indicate if the data is single-end (SE) or paired-end (PE)
 ends=SE
 #Set the slurm queue to use: defq for gomphus, epyc for iago, htc for hawk

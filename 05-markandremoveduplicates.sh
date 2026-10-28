@@ -6,8 +6,6 @@
 ###VARIABLES TO BE SET###
 #Set the path to your directory on scratch (do not end with a /)
 myDir=
-#Set your username
-userProject=
 #Set the slurm queue to use: defq for gomphus, epyc for iago, htc for hawk
 queue=epyc
 ######
@@ -61,7 +59,6 @@ do
         echo "#SBATCH --array=1-${nSamps}" >> ${scriptName}
         echo "#SBATCH --output ${myDir}/OUT/${scriptBase}${jobName}.%A-%a" >> ${scriptName}
         echo "#SBATCH --error ${myDir}/ERR/${scriptBase}${jobName}.%A-%a" >> ${scriptName}
-        echo "#SBATCH --account=${userProject}" >> ${scriptName}
 
         echo "module load ${PICARD}" >> ${scriptName}
         echo "module load ${JAVA}" >> ${scriptName}

@@ -6,8 +6,6 @@
 ###VARIABLES TO BE SET###
 #Set the path to your directory on scratch
 myDir=
-#Set your username
-userProject=
 #Set whether you want to use the version of the data with duplicates kept (mark) or removed (rm)
 DUP=mark
 #Indicate if the data is single-end (SE) or paired-end (PE)
@@ -68,7 +66,6 @@ do
         echo "#SBATCH --array=1-${nSamps}" >> ${scriptName}
         echo "#SBATCH --output ${myDir}/OUT/${scriptBase}${jobName}.%A-%a" >> ${scriptName}
         echo "#SBATCH --error ${myDir}/ERR/${scriptBase}${jobName}.%A-%a" >> ${scriptName}
-        echo "#SBATCH --account=${userProject}" >> ${scriptName}
 
         echo "module load ${SAMTOOLS}" >> ${scriptName}
         echo "module load ${SUBREAD}" >> ${scriptName}

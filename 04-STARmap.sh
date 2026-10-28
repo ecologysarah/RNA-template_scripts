@@ -6,8 +6,6 @@
 ###VARIABLES TO BE SET###
 #Set the path to your directory on scratch
 myDir=
-#Set your username
-userProject=
 #Set the path to your reference genome directory, FASTA file and GTF/GFF file
 GENOME=${myDir}/resources/humanGRCh38
 FASTA=GRCh38_latest_genomic.fna
@@ -48,7 +46,6 @@ echo "#SBATCH --tasks-per-node=${cpu}" >> ${scriptName}
 echo "#SBATCH -o ${myDir}/OUT/${scriptBase}${jobName}.%J" >> ${scriptName}
 echo "#SBATCH -e ${myDir}/ERR/${scriptBase}${jobName}.%J" >> ${scriptName}
 echo "#SBATCH --job-name=index" >> ${scriptName}
-echo "#SBATCH --account=${userProject}" >> ${scriptName}
 
 echo "if [ ! -f ${GENOME}/SAindex ]; then
 
@@ -95,7 +92,6 @@ do
         echo "#SBATCH --array=1-${nSamps}" >> ${scriptName}
         echo "#SBATCH --output ${myDir}/OUT/${scriptBase}${jobName}.%A-%a" >> ${scriptName}
         echo "#SBATCH --error ${myDir}/ERR/${scriptBase}${jobName}.%A-%a" >> ${scriptName}
-        echo "#SBATCH --account=${userProject}" >> ${scriptName}
 
         echo "module load ${STAR}" >> ${scriptName}
 

@@ -6,8 +6,6 @@
 ###VARIABLES TO BE SET###
 #Set the path to your directory on scratch - do not include a trailing /
 myDir=
-#Set your username
-userProject=
 #Were duplicates removed (rm) or not (mark)?
 DUP=mark
 #Set the name and path for the tar file (do not include the file extension)
@@ -15,7 +13,7 @@ TAR=
 #Set the path to the archive location. N.B. If this is a remote server, it will need a ssh key pair in place.
 ARCHIVE=
 #Set the slurm queue to use: defq for gomphus, epyc for iago, htc for hawk
-queue=mammoth
+queue=
 ######
 
 mem="40G"

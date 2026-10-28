@@ -6,8 +6,6 @@
 ###VARIABLES TO BE SET###
 #Set the path to your directory on scratch
 myDir=
-#Set your username
-userProject=
 ######
 
 mem="1G"
@@ -58,7 +56,6 @@ do
         echo "#SBATCH --array=1-${nSamps}" >> ${scriptName}
         echo "#SBATCH --output ${myDir}/OUT/${scriptBase}.%A-%a" >> ${scriptName}
         echo "#SBATCH --error ${myDir}/ERR/${scriptBase}.%A-%a" >> ${scriptName}
-        echo "#SBATCH --account=${userProject}" >> ${scriptName}
 
         echo "module load ${BAMTOOLS}" >> ${scriptName}
 
