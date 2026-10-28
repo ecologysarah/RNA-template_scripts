@@ -15,9 +15,9 @@ scriptBase="06bamstats"
 slurmids=""
 
 #Set the correct version of BAMtools
-BAMTOOLS=$(module avail -L bamtools/ | tail -n 1)
+BAMTOOLS=$(module --default --redirect avail bamtools | sed -n 3p)
 #Set the correct version of multiqc
-multiQC=$(module avail -L multiqc/ | tail -n 1)
+multiQC=$(module --default --redirect avail multiqc | sed -n 3p)
 ##Append this information to the report
 echo -e "\nData summaries produced with ${BAMTOOLS}" >> ${myDir}/AnalysisReport.txt
 

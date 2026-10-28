@@ -22,7 +22,7 @@ runTime="02:00:00"
 scriptBase="04map"
 
 #Set the correct version of STAR
-STAR=$(module avail -L star | tail -n 1)
+STAR=$(module --default --redirect avail star | sed -n 3p)
 ##Append this information to the report
 echo -e "\nReads mapped to genome with ${STAR}" >> ${myDir}/AnalysisReport.txt
 

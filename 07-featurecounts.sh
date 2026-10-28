@@ -24,9 +24,9 @@ scriptBase="07counts"
 runTime="00:20:00"
 
 #Set the correct version of SAMtools
-SAMTOOLS=$(module avail -L samtools | tail -n 1)
+SAMTOOLS=$(module --default --redirect avail samtools | sed -n 3p)
 #Set the correct version of subread
-SUBREAD=$(module avail -L subread | tail -n 1)
+SUBREAD=$(module --default --redirect avail subread | sed -n 3p)
 ##Append this information to the report
 echo -e "\nCounts generated with ${SUBREAD}" >> ${myDir}/AnalysisReport.txt
 

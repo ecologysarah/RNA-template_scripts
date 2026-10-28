@@ -22,7 +22,7 @@ runTime="00:05:00"
 scriptBase="02trim"
 
 #Set the correct version of fastp
-FASTP=$(module avail -L fastp/ | tail -n 1)
+FASTP=$(module --default --redirect avail fastp | sed -n 3p)
 ##Append this information to the report
 echo -e "\nSequences quality trimmed with ${FASTP}" >> ${myDir}/AnalysisReport.txt
 

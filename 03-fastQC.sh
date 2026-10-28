@@ -19,8 +19,8 @@ scriptBase="03QC"
 slurmids=""
 
 #Set the correct version of FastQC and multiqc
-FASTQC=$(module avail -L fastqc/ | tail -n 1)
-multiQC=$(module avail -L multiqc/ | tail -n 1)
+FASTQC=$(module --default --redirect avail fastqc/ | sed -n 3p)
+multiQC=$(module --default --redirect avail multiqc/ | sed -n 3p)
 ##Append this information to the report
 echo -e "\nQuality assessed with ${FASTQC} and ${multiQC}" >> ${myDir}/AnalysisReport.txt
 

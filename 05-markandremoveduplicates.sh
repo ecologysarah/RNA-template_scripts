@@ -16,10 +16,10 @@ runTime="00:20:00"
 scriptBase="05markdup"
 
 #Set the correct version of picard
-PICARD=$(module avail -L picard/ | tail -n 1 | sed -E 's/\s+//')
+PICARD=$(module --default --redirect avail picard | sed -n 3p | sed -E 's/\s+//')
 #Set the correct version of SAMtools
-SAMTOOLS=$(module avail -L samtools/ | tail -n 1)
-JAVA=$(module avail -L java/ | tail -n 1)
+SAMTOOLS=$(module --default --redirect avail samtools | sed -n 3p)
+JAVA=$(module --default --redirect avail java | sed -n 3p)
 ##Append this information to the report
 echo -e "\nDuplicates assessed with ${PICARD} and ${SAMTOOLS}" >> ${myDir}/AnalysisReport.txt
 
